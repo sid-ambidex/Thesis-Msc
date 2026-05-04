@@ -77,7 +77,7 @@ Each window is formatted as:
 
 **Expected JSON output:**
 ```json
-{"MF": 0, "SK": 0, "SJ": 0, "conf": 0.5}
+{"MF": 0, "SK": 0, "NEG": 0, "conf": 0.5}
 ```
 
 **Confidence levels:**
@@ -87,14 +87,6 @@ Each window is formatted as:
 | `0.8` | Clear, explicit evidence in `[TARGET]` |
 | `0.5` | Partial evidence, not strong |
 | `0.2` | Uncertain / text too short / unclear |
-
-**Label definitions (from German prompt):**
-
-| Label | German term | Trigger criteria |
-|-------|------------|-----------------|
-| `MF` | Achtsamkeit (Mindfulness) | Non-judgmental naming of one's thoughts/feelings: *"ich merke…"*, *"ich war irritiert…"*, *"mir ist aufgefallen…"* |
-| `SK` | Selbstfreundlichkeit (Self-Kindness) | Explicit kind or forgiving self-treatment: *"das ist okay"*, *"ich darf Fehler machen"*, *"ich verzeihe mir"* |
-| `SJ` | Selbstverurteilung (Self-Judgment) | Harsh self-criticism or rumination: *"ich bin unfähig"*, *"ich habe versagt"* |
 
 **Key rules from prompt:**
 - No label from events/actions alone; only explicit linguistic evidence
@@ -123,7 +115,7 @@ preds_unimodal/{split}/text/
 
 ### `llm-qlora.ipynb`
 
-Fine-tunes LLaMA using [QLoRA](https://arxiv.org/abs/2305.14314): 4-bit NF4 quantisation (bitsandbytes) with LoRA adapters (PEFT). This enables fine-tuning a 3B-parameter model on a single consumer GPU.
+Fine-tunes LLaMA using [QLoRA]: 4-bit NF4 quantisation (bitsandbytes) with LoRA adapters (PEFT). This enables fine-tuning a 3B-parameter model on a single consumer GPU.
 
 **Key configuration constants:**
 
@@ -150,7 +142,7 @@ Fine-tunes LLaMA using [QLoRA](https://arxiv.org/abs/2305.14314): 4-bit NF4 quan
 | `target_speaker` | str | Speaker role of the target |
 | `context_speaker` | str | Speaker role of the context (optional) |
 | `start_ms`, `end_ms` | int | Window boundaries in milliseconds |
-| `MF`, `SK`, `SJ` | int | Binary ground-truth labels (0 or 1) |
+| `MF`, `SK`, `NEG` | int | Binary ground-truth labels (0 or 1) |
 | `file_id` / `video_id` | str | Recording identifier |
 
 **Context construction (`build_model_input_ctx`):**
